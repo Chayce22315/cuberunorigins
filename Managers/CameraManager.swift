@@ -44,9 +44,9 @@ final class CameraManager {
     /// - Parameter deltaTime: Elapsed time since the last update (unused but kept for symmetry).
     func update(deltaTime: TimeInterval) {
         guard let cam = cameraNode, let player = playerNode else { return }
-        let offset = player.position - cam.position
-        let move = offset * followLag
-        cam.position += move
+        let offset = CGPoint(x: player.position.x - cam.position.x, y: player.position.y - cam.position.y)
+        let move = CGPoint(x: offset.x * followLag, y: offset.y * followLag)
+        cam.position = CGPoint(x: cam.position.x + move.x, y: cam.position.y + move.y)
     }
 
     /// Triggers a brief camera shake.

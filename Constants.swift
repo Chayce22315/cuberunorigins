@@ -69,4 +69,23 @@ struct Constants {
         static let introDuration: TimeInterval = 6.0
         static let chaseDuration: TimeInterval = 5.0
     }
+
+    // MARK: - Player nested constants
+    struct Player {
+        static let size = playerSize
+        static let color = playerColor
+        static let movementSpeed = baseSpeed
+        static let jumpImpulse = jumpImpulse
+    }
+
+    // MARK: - PhysicsCategory alias
+    struct PhysicsCategory {
+        static let player = playerCategory
+        static let obstacle = obstacleCategory
+        static let evilCube = evilCubeCategory
+        static let ground = groundCategory
+    }
+
+    // Alias for chaseDuration at top level
+    static let chaseDuration = Enemy.chaseDuration
 }
