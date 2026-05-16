@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\chayc\\\\cuberunorigins\" -Directory | Where-Object { $_.Name -eq 'Tests' })",
+      "Bash(brew *)",
+      "Bash(curl -L -o /c/Users/chayc/xcodegen.zip https://github.com/yonaskolb/XcodeGen/releases/download/2.39.0/xcodegen.zip)",
+      "Bash(unzip -q /c/Users/chayc/xcodegen.zip -d /c/Users/chayc/xcodegen_bin)",
+      "Bash(chmod +x /c/Users/chayc/xcodegen_bin/xcodegen)",
+      "Bash(/c/Users/chayc/xcodegen_bin/xcodegen --version)",
+      "Bash(/c/Users/chayc/xcodegen_bin/xcodegen/xcodegen/bin/xcodegen *)",
+      "Bash(/c/Users/chayc/xcodegen_bin/xcodegen/bin/xcodegen *)",
+      "Bash(xcodebuild clean *)",
+      "Bash(set -e)",
+      "Bash(git clone *)",
+      "Bash(git -C repo add .github/workflows/build-unsigned-ipa.yml)",
+      "Bash(git -C repo commit -m \"Add GitHub Action to build unsigned IPA\")",
+      "Bash(git -C repo push origin main)",
+      "Bash(git -C repo commit -m \"Update workflow to use Xcode.app and XcodeGen\")",
+      "Bash(git -C repo pull --rebase origin main)",
+      "Bash(git -C repo rebase --continue)",
+      "Bash(git -C repo add Sources/AIComponent.swift)",
+      "Bash(git -C repo commit -m \"Remove duplicate AIComponent.swift from Sources\")",
+      "Bash(git -C repo add Sources/EvilCubeEntity.swift)",
+      "Bash(git -C repo commit -m \"Remove duplicate EvilCubeEntity.swift stub from Sources\")",
+      "Bash(git -C repo add IntroCutscene.swift)",
+      "Bash(git -C repo commit -m \"Remove duplicate IntroCutscene.swift stub from project root\")",
+      "Bash(git *)"
+    ]
+  }
+}
