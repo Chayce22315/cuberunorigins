@@ -26,6 +26,10 @@ targets:
         excludes:
           - Tests/**
           - project.yml
+          - Sources/**
+        excludes:
+          - Tests/**
+          - project.yml
           - .git/**
     resources:
       - path: Assets.xcassets
