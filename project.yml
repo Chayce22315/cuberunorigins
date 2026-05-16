@@ -1,0 +1,62 @@
+# XcodeGen project specification for Cube Run: Origins
+name: CubeRunOrigins
+options:
+  bundleIdPrefix: com.chayce
+  developmentRegion: en
+  deploymentTarget:
+    iOS: "16.0"
+  usesTabs: false
+  indentWidth: 4
+  tabWidth: 4
+
+settings:
+  SWIFT_VERSION: "5.9"
+  CODE_SIGN_STYLE: Automatic
+  ENABLE_BITCODE: NO
+  IPHONEOS_DEPLOYMENT_TARGET: "16.0"
+  TARGETED_DEVICE_FAMILY: "1,2"
+  PRODUCT_BUNDLE_IDENTIFIER: $(BUNDLE_ID)
+
+targets:
+  CubeRunOrigins:
+    type: application
+    platform: iOS
+    sources:
+      - path: .
+        excludes:
+          - Tests/**
+          - project.yml
+          - .git/**
+    resources:
+      - path: Assets.xcassets
+      - path: LaunchScreen.storyboard
+    settings:
+      PRODUCT_NAME: $(TARGET_NAME)
+      INFOPLIST_FILE: Info.plist
+      BUNDLE_ID: "$(BUNDLE_ID_PREFIX).cuberunorigins"
+    dependencies: []
+
+  CubeRunOriginsTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: Tests
+    settings:
+      TEST_HOST: "$(BUILT_PRODUCTS_DIR)/CubeRunOrigins.app/CubeRunOrigins"
+      BUNDLE_LOADER: "$(TEST_HOST)"
+    dependencies:
+      - target: CubeRunOrigins
+
+schemes:
+  CubeRunOrigins:
+    build:
+      targets:
+        CubeRunOrigins: all
+    run:
+      config: Release
+    test:
+      targets:
+        - CubeRunOriginsTests
+    profile: {}
+    archive:
+      config: Release
