@@ -1,0 +1,64 @@
+name: Build unsigned IPA
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Xcode
+        run: |
+          sudo xcode-select -s /Applications/Xcode-beta.app/Contents/Developer
+
+      - name: Install dependencies (if any)
+        run: |
+          # Add any dependency installation here, e.g. `brew install swiftlint`
+          echo "No extra dependencies required."
+
+      - name: Build unsigned IPA
+        env:
+          CODE_SIGNING_ALLOWED: NO
+          CODE_SIGNING_REQUIRED: NO
+          CODE_SIGN_IDENTITY: ""
+          PROVISIONING_PROFILE_SPECIFIER: ""
+        run: |
+          xcodebuild \
+            -scheme CubeRunOrigins \
+            -configuration Release \
+            -sdk iphoneos \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            PROVISIONING_PROFILE_SPECIFIER="" \
+            BUILD_DIR=./build \
+            OBJROOT=./build/obj \
+            SYMROOT=./build/sym \
+            BUILD_ROOT=./build/root \
+            -archivePath ${{ runner.temp }}/CubeRunOrigins.xcarchive \
+            archive
+
+          # Export an unsigned .ipa from the archive
+          xcodebuild -exportArchive \
+            -archivePath ${{ runner.temp }}/CubeRunOrigins.xcarchive \
+            -exportPath ${{ runner.temp }}/unsigned-ipa \
+            -exportOptionsPlist ${{ runner.temp }}/ExportOptions.plist
+
+          # Move the generated .ipa to the repo (or a folder you prefer)
+          mkdir -p unsigned-ipa
+          cp ${{ runner.temp }}/unsigned-ipa/*.ipa unsigned-ipa/
+
+      - name: Upload unsigned IPA as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: unsigned-ipa
+          path: unsigned-ipa/*.ipa
+          retention-days: 7
